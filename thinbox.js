@@ -1,7 +1,6 @@
 (function($){
 	$.thinboxRemove = function() {
 		$('#thinboxModalBG').remove();
-		console.log("test");
 		return false;
 	};
 	$.fn.thinbox = function(options) {
@@ -14,14 +13,23 @@
 		};
 		this.settings = $.extend(defaults,options);
 		var self = this;
+
 		
 		$.each(this,function(){
 			$(this).bind('click',function() {
-				var windowHeight = $(this.hash).find('div:first').css('height');
-				var windowWidth = $(this.hash).find('div:first').css('width');
-				windowHeight = ((windowHeight=='auto')?self.settings.height:windowHeight);
-				windowWidth = ((windowWidth=='auto')?self.settings.width:windowWidth)
-				var thinboxContent = $(this.hash).html();
+				if ($(this).attr("href").substr(0, 1) == "#") {
+					var windowHeight = $(this.hash).find('div:first').css('height');
+					var windowWidth = $(this.hash).find('div:first').css('width');
+					windowHeight = ((windowHeight=='auto')?self.settings.height:windowHeight);
+					windowWidth = ((windowWidth=='auto')?self.settings.width:windowWidth);
+					var thinboxContent = $(this.hash).html();
+				}
+				else {
+					var windowHeight = self.settings.height;
+					var windowWidth = self.settings.width;
+					var thinboxContent = $("<iframe height='100%' width='100%' style='border:0'></iframe>");
+					thinboxContent.attr("src", $(this).attr("href"));
+				}
 				var thinboxBG = $('<div></div>').attr('id','thinboxModalBG');
 				var thinboxModalContent = $('<div></div>').attr('id','thinboxModalContent').addClass('thinboxModalContent');
 				var thinboxModalContentBG = $('<div></div>').attr('id','thinboxModalContentBG');
