@@ -96,7 +96,7 @@ var ThinBox = { };
 			width: '500px',
 			height: '300px',
 			margin: '0 auto',
-			top: '100px',
+			top: '10%',
 			clickClose: true,
 			thinboxModalBG: 'thinboxModalBG',
 			thinboxModalContent: 'thinboxModalContent',
