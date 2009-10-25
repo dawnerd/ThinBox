@@ -3,6 +3,7 @@
 <head>
 	<title>Thinbox Demo</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+	<script src="http://github.com/jgallen23/low-pro-for-jquery/raw/master/src/lowpro.jquery.js"></script>
 	<script src="thinbox.js"></script>
 	<style>
 		body { font-family: Georgia; color: #222425; font-size: 1.35em; line-height: 1.7em; }
@@ -16,14 +17,6 @@
 		.aboutThinbox { height: 300px; width: 500px; overflow: auto; }
 			.aboutThinbox img { float: left; height: 100px; margin-right: 10px; }
 	</style>
-	<script>
-		$(document).ready(function(){
-			$("a[rel='thinbox']").thinbox();
-			$('a.jsThinboxClose').live("click",function(){
-				$.thinboxRemove();
-			});
-		});
-	</script>
 </head>
 <body>
 	<p>This is some text. <a href="#aboutThinbox" rel="thinbox">This link</a> should open a thinbox window.</p>
