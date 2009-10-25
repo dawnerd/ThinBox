@@ -6,6 +6,7 @@ var ThinBox = { };
 		},
 		onclick: function() {
 			this.showModal(this.element);
+			return false;
 		},
 		showModal: function(element) {
 			var self = this;
@@ -54,10 +55,16 @@ var ThinBox = { };
 				$(thinboxBG).bind('click',function(event){
 					self.remove(); 
 				 });
+			
+				$(thinboxModalContent).bind('click',function(event){  
+					if( event.stopPropagation ) { event.stopPropagation(); }
+					else { event.cancelBubble = true; }
+				});
 			}
-			$(thinboxModalContent).bind('click',function(event){  
-				if( event.stopPropagation ) { event.stopPropagation(); }
-				else { event.cancelBubble = true; }
+			
+			$('.jsThinboxClose').bind('click', function() {
+				self.remove();
+				return false;
 			});
 			
 			$(window).bind('resize',function(){
