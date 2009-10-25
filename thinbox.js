@@ -35,9 +35,9 @@ var ThinBox = { };
 				'position': 'absolute',
 				'top': '0',
 				'left': '0',
-				'background': '#585862',
-				'opacity': '.25',
-				'filter': 'alpha(opacity=25)',
+				'background': this.options.thinboxModalContentBGColor,
+				'opacity': '.'+this.options.thinboxModalContentBGOpacity,
+				'filter': 'alpha(opacity='+this.options.thinboxModalContentBGOpacity+')',
 				'zIndex': '999999999999999'
 			}).appendTo(thinboxBG);
 			
@@ -93,7 +93,9 @@ var ThinBox = { };
 			clickClose: true,
 			thinboxModalBG: 'thinboxModalBG',
 			thinboxModalContent: 'thinboxModalContent',
-			thinboxModalContentBG: 'thinboxModalContentBG'
+			thinboxModalContentBG: 'thinboxModalContentBG',
+			thinboxModalContentBGColor: '#000',
+			thinboxModalContentBGOpacity: '30'
 		});
 	});
 })(jQuery);
