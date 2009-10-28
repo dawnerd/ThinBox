@@ -107,7 +107,7 @@ var ThinBox = { };
 	$(document).ready(function(){
 		ThinBox = $("a[rel='thinbox']").attachAndReturn("ThinBox", {
 			/* Default Settings */
-			width: '500px',
+			width: '700px',
 			height: '300px',
 			margin: '0 auto',
 			top: '10%',
