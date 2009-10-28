@@ -62,6 +62,10 @@ var ThinBox = { };
 				});
 			}
 			
+			if(this.options.fullHeight) {
+				this.resizeHeight();
+			}
+			
 			$('.jsThinboxClose').bind('click', function() {
 				self.remove();
 				return false;
@@ -70,6 +74,9 @@ var ThinBox = { };
 			$(window).bind('resize',function(){
 				self.resizeBG();
 				self.resizeBG(); /* Dirty hack for scrollbars */
+				if(self.options.fullHeight) {
+					self.resizeHeight();
+				}
 			});
 			return false;
 		},
@@ -86,6 +93,13 @@ var ThinBox = { };
 				'height':$(window).height(),
 				'width': $(window).width()
 			});
+		},
+		resizeHeight: function() {
+			var height = parseInt($(window).height())-(parseInt(this.options.fullHeightPadding)*2);
+			$('#'+this.options.thinboxModalContent).css({
+				'height': height,
+				'top': this.options.fullHeightPadding+'px'
+			})
 		}
 	});
 	
@@ -98,6 +112,8 @@ var ThinBox = { };
 			margin: '0 auto',
 			top: '10%',
 			clickClose: true,
+			fullHeight: true,
+			fullHeightPadding: '30',
 			thinboxModalBG: 'thinboxModalBG',
 			thinboxModalContent: 'thinboxModalContent',
 			thinboxModalContentBG: 'thinboxModalContentBG',

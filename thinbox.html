@@ -10,11 +10,14 @@
 		a { color: #216d93; text-decoration: none; }
 		a:hover { text-decoration: underline; }
 		
+		.cl { clear: both; }
+		
 		.thinboxContent { display: none; }
 		
-		.thinboxModalContent { border: 6px solid #383838; padding: 14px; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; background: #fff; }
+		.thinboxModalContent { border: 6px solid #383838; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; background: #fff; overflow: auto; }
+		.thinboxModalContent .container { padding: 14px; }
 		
-		.aboutThinbox { height: 300px; width: 500px; overflow: auto; }
+		.aboutThinbox { overflow: auto; }
 			.aboutThinbox img { float: left; height: 100px; margin-right: 10px; }
 	</style>
 </head>
@@ -24,9 +27,10 @@
 	
 	<div class="thinboxContent">
 		<div id="aboutThinbox">
-			<div class="aboutThinbox">
+			<div class="container aboutThinbox">
 				<p><img src="http://www.brentcsutoras.com/wp-content/uploads/2009/05/reddit-alien-zombied.jpg">
-			All of this content should be directly loaded into the thinbox window.<a class="jsThinboxClose" href="#">Close</a></p>
+			All of this content should be directly loaded into the thinbox window. All of this content should be directly loaded into the thinbox window. All of this content should be directly loaded into the thinbox window. All of this content should be directly loaded into the thinbox window. All of this content should be directly loaded into the thinbox window.<a class="jsThinboxClose" href="#">Close</a></p>
+				<div class="cl"></div>
 			</div>
 		</div>
 		<div id="aboutThinbox2">
@@ -37,3 +41,4 @@
 	</div>
 </body>
 </html>
+ 
