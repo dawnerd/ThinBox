@@ -90,7 +90,7 @@ var ThinBox = { };
 	});
 	
 	//init thinbox
-	$(window).load(function(){
+	$(document).ready(function(){
 		ThinBox = $("a[rel='thinbox']").attachAndReturn("ThinBox", {
 			/* Default Settings */
 			width: '500px',
