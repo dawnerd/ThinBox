@@ -12,10 +12,12 @@ var ThinBox = { };
 			var self = this;
 			if ($(element).attr("href").substr(0, 1) == "#") {
 				var thinboxContent = $($(element).attr("href")).html();
+				var inIframe = false;
 			}
 			else {
 				var thinboxContent = $("<iframe height='100%' width='100%' style='border:0'></iframe>");
 				thinboxContent.attr("src", $(element).attr("href"));
+				var inIframe = true;
 			}
 			
 			var thinboxBG = $('<div></div>').attr('id',this.options.thinboxModalBG);
@@ -50,6 +52,12 @@ var ThinBox = { };
 				'position': 'relative',
 				'zIndex': '9999999999999999'
 			}).html(thinboxContent).appendTo(thinboxBG);
+			
+			if(inIframe) {
+				$(thinboxModalContent).css({
+					'overflow': 'hidden'
+				});
+			}
 			
 			if(this.options.clickClose) {
 				$(thinboxBG).bind('click',function(event){
