@@ -1,4 +1,10 @@
-var ThinBox = { };
+var ThinBox = {
+	modals: [],
+	remove: function() {
+		this.modals[0].remove();
+		return false;
+	}
+};
 (function($){
 	$.ux.behavior("ThinBox", {
 		initialize: function() {
@@ -113,7 +119,7 @@ var ThinBox = { };
 	
 	//init thinbox
 	$(document).ready(function(){
-		ThinBox = $("a[rel='thinbox']").attachAndReturn("ThinBox", {
+		ThinBox.modals = $("a[rel='thinbox']").attachAndReturn("ThinBox", {
 			/* Default Settings */
 			width: '700px',
 			height: '300px',
