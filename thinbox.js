@@ -143,8 +143,8 @@ var ThinBox = {
 	$(document).ready(function(){
 		ThinBox.modals = $("a[rel='thinbox']").attachAndReturn("ThinBox", {
 			/* Default Settings */
-			width: '700px',
-			height: '300px',
+			width: '600px',
+			height: '350px',
 			margin: '0 auto',
 			top: '10%',
 			clickClose: true,

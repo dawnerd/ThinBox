@@ -1,0 +1,3 @@
+.thinboxContent { display: none; }
+.thinboxModalContent { border: 6px solid #383838; -moz-border-radius: 10px; -webkit-border-radius: 10px; border-radius: 10px; background: #fff; overflow: auto; }
+.thinboxModalContent .container { padding: 14px; }
