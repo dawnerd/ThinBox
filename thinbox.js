@@ -97,16 +97,11 @@ var ThinBox = {
 					self.resizeHeight();
 				}
 			});
-			
-			//fade in
-			$(thinboxBG).fadeIn("fast");
+			$(thinboxBG).show();
 			return false;
 		},
 		remove: function() {
-			var _modal = $('#'+this.options.thinboxModalBG);
-			_modal.fadeOut("fast",function(){
-				_modal.remove();
-			});
+			$('#'+this.options.thinboxModalBG).remove();
 			return false;
 		},
 		resizeBG: function() {
@@ -141,7 +136,7 @@ var ThinBox = {
 	
 	//init thinbox
 	$(document).ready(function(){
-		ThinBox.modals = $("a[rel='thinbox']").attachAndReturn("ThinBox", {
+		ThinBox.modals = $("a[rel*='thinbox']").attachAndReturn("ThinBox", {
 			/* Default Settings */
 			width: '600px',
 			height: '350px',
