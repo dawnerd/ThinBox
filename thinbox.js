@@ -127,11 +127,14 @@ var ThinBox = {
 			})
 		},
 		resize: function(width,height) {
+			var newSizes = {
+				'height': height+'px',
+				'width': width+'px'
+			};
 			if(this.options.animateResize) {
-				$('#'+this.options.thinboxModalContent).animate({
-					'height': height+'px',
-					'width': width+'px'
-				});
+				$('#'+this.options.thinboxModalContent).animate(newSizes);
+			} else {
+				$('#'+this.options.thinboxModalContent).css(newSizes);
 			}
 		}
 	});
