@@ -25,7 +25,7 @@ var ThinBox = {
 				var inIframe = false;
 			}
 			else {
-				var thinboxContent = $("<iframe height='100%' width='100%' style='border:0'></iframe>");
+				var thinboxContent = $("<iframe height='100%' width='100%' frameborder='0' style='border:0'></iframe>");
 				thinboxContent.attr("src", $(element).attr("href"));
 				var inIframe = true;
 			}
@@ -38,6 +38,7 @@ var ThinBox = {
 				'height': $(window).height(),
 				'width': $(window).width(),
 				'position': 'absolute',
+				'display': 'none',
 				'top': '0',
 				'left': '0'
 			}).appendTo('body');
@@ -96,10 +97,16 @@ var ThinBox = {
 					self.resizeHeight();
 				}
 			});
+			
+			//fade in
+			$(thinboxBG).fadeIn("fast");
 			return false;
 		},
 		remove: function() {
-			$('#'+this.options.thinboxModalBG).remove();
+			var _modal = $('#'+this.options.thinboxModalBG);
+			_modal.fadeOut("fast",function(){
+				_modal.remove();
+			});
 			return false;
 		},
 		resizeBG: function() {
