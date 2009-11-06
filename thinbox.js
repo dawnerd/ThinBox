@@ -37,7 +37,7 @@ var ThinBox = {
 			$(thinboxBG).css({
 				'height': $(window).height(),
 				'width': $(window).width(),
-				'position': 'absolute',
+				'position': 'fixed',
 				'display': 'none',
 				'top': '0',
 				'left': '0'
