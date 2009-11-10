@@ -20,13 +20,14 @@ var ThinBox = {
 		},
 		showModal: function(element) {
 			var self = this;
-			if ($(element).attr("href").substr(0, 1) == "#") {
+			var href = $(element).attr("href")||$(element).attr("alt");
+			if (href.substr(0, 1) == "#") {
 				var thinboxContent = $($(element).attr("href")).html();
 				var inIframe = false;
 			}
 			else {
 				var thinboxContent = $("<iframe height='100%' width='100%' frameborder='0' style='border:0'></iframe>");
-				thinboxContent.attr("src", $(element).attr("href"));
+				thinboxContent.attr("src", href);
 				var inIframe = true;
 			}
 			
@@ -136,7 +137,7 @@ var ThinBox = {
 	
 	//init thinbox
 	$(document).ready(function(){
-		ThinBox.modals = $("a[rel*='thinbox']").attachAndReturn("ThinBox", {
+		ThinBox.modals = $("a[rel*='thinbox'],input.thinbox").attachAndReturn("ThinBox", {
 			/* Default Settings */
 			width: '600px',
 			height: '350px',
