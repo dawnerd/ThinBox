@@ -15,14 +15,16 @@ var ThinBox = {
 			/* Probably preload images here */
 		},
 		onclick: function() {
+			console.time("show");
 			this.showModal(this.element);
 			return false;
 		},
 		showModal: function(element) {
 			var self = this;
-			var href = $(element).attr("href")||$(element).attr("alt");
+			var $element = $(element);
+			var href = $element.attr("href")||$element.attr("alt");
 			if (href.substr(0, 1) == "#") {
-				var thinboxContent = $($(element).attr("href")).html();
+				var thinboxContent = $($element.attr("href")).html();
 				var inIframe = false;
 			}
 			else {
@@ -73,7 +75,9 @@ var ThinBox = {
 			
 			if(this.options.clickClose) {
 				$(thinboxBG).bind('click',function(event){
+					console.time("close");
 					self.remove(); 
+					console.timeEnd("close");
 				 });
 			
 				$(thinboxModalContent).bind('click',function(event){  
@@ -87,18 +91,23 @@ var ThinBox = {
 			}
 			
 			$('.jsThinboxClose').bind('click', function() {
+				console.time("close");
 				self.remove();
+				console.timeEnd("close");
 				return false;
 			});
 			
 			$(window).bind('resize',function(){
+				console.time("resize");
 				self.resizeBG();
 				self.resizeBG(); /* Dirty hack for scrollbars */
 				if(self.options.fullHeight) {
 					self.resizeHeight();
 				}
+				console.timeEnd("resize");
 			});
 			$(thinboxBG).show();
+			console.timeEnd("show");
 			return false;
 		},
 		remove: function() {
@@ -137,6 +146,7 @@ var ThinBox = {
 	
 	//init thinbox
 	$(document).ready(function(){
+		console.time("init");
 		ThinBox.modals = $("a[rel*='thinbox'],input.thinbox").attachAndReturn("ThinBox", {
 			/* Default Settings */
 			width: '600px',
@@ -153,5 +163,6 @@ var ThinBox = {
 			thinboxModalContentBGColor: '#000',
 			thinboxModalContentBGOpacity: '30'
 		});
+		console.timeEnd("init");
 	});
 })(jQuery);
