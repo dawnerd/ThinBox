@@ -7,7 +7,8 @@ var ThinBox = {
 	resize: function(width,height) {
 		this.modals[0].resize(width,height);
 		return false;
-	}
+	},
+	onShow: function() {}
 };
 (function($){
 	$.ux.behavior("ThinBox", {
@@ -17,6 +18,9 @@ var ThinBox = {
 		onclick: function() {
 			this.showModal(this.element);
 			return false;
+		},
+		getContentElement: function() {
+			return $("#" + this.options.thinboxModalContent);
 		},
 		showModal: function(element) {
 			var self = this;
@@ -65,11 +69,6 @@ var ThinBox = {
 				'zIndex': '9999999'
 			}).html(thinboxContent).appendTo(thinboxBG);
 			
-			if(inIframe) {
-				$(thinboxModalContent).css({
-					'overflow': 'hidden'
-				});
-			}
 			
 			if(this.options.clickClose) {
 				$(thinboxBG).bind('click',function(event){
@@ -81,7 +80,6 @@ var ThinBox = {
 					else { event.cancelBubble = true; }
 				});
 			}
-			
 			if(this.options.fullHeight) {
 				this.resizeHeight();
 			}
@@ -99,6 +97,7 @@ var ThinBox = {
 				}
 			});
 			$(thinboxBG).show();
+			this.dispatchEvent("Show");
 			return false;
 		},
 		remove: function() {
@@ -133,25 +132,28 @@ var ThinBox = {
 				$('#'+this.options.thinboxModalContent).css(newSizes);
 			}
 		}
+	}, {
+		width: '600px',
+		height: '350px',
+		margin: '0 auto',
+		top: '10%',
+		clickClose: true,
+		fullHeight: false,
+		animateResize: true,
+		fullHeightPadding: '30',
+		thinboxModalBG: 'thinboxModalBG',
+		thinboxModalContent: 'thinboxModalContent',
+		thinboxModalContentBG: 'thinboxModalContentBG',
+		thinboxModalContentBGColor: '#000',
+		thinboxModalContentBGOpacity: '30',
+		onShow: function() { }
 	});
 	
 	//init thinbox
 	$(document).ready(function(){
 		ThinBox.modals = $("a[rel*='thinbox'],input.thinbox").attachAndReturn("ThinBox", {
-			/* Default Settings */
-			width: '600px',
-			height: '350px',
-			margin: '0 auto',
-			top: '10%',
-			clickClose: true,
-			fullHeight: false,
-			animateResize: true,
-			fullHeightPadding: '30',
-			thinboxModalBG: 'thinboxModalBG',
-			thinboxModalContent: 'thinboxModalContent',
-			thinboxModalContentBG: 'thinboxModalContentBG',
-			thinboxModalContentBGColor: '#000',
-			thinboxModalContentBGOpacity: '30'
+			onShow: function() { ThinBox.onShow.call(this); }
 		});
 	});
 })(jQuery);
+
