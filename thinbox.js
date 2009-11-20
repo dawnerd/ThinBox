@@ -25,9 +25,17 @@ var ThinBox = {
 		showModal: function(element) {
 			var self = this;
 			var href = $(element).attr("href")||$(element).attr("alt");
+			var imageUrl = /\.(jpe?g|png|gif|bmp)/gi;
+			var isImage = false;
 			if (href.substr(0, 1) == "#") {
 				var thinboxContent = $($(element).attr("href")).html();
 				var inIframe = false;
+			} else if(href.match(imageUrl)) {
+				var thinboxImage = new Image();
+				thinboxImage.src = href;
+				var thinboxContent = $("<img>").attr("src",href);
+				var inIframe = false;
+				var isImage = true;
 			}
 			else {
 				var thinboxContent = $("<iframe height='100%' width='100%' frameborder='0' style='border:0'></iframe>");
@@ -80,8 +88,13 @@ var ThinBox = {
 					else { event.cancelBubble = true; }
 				});
 			}
+			
 			if(this.options.fullHeight) {
 				this.resizeHeight();
+			}
+			
+			if(isImage) {
+				this.resize(thinboxImage.width,thinboxImage.height+11);
 			}
 			
 			$('.jsThinboxClose').bind('click', function() {
