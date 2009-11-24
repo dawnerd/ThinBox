@@ -12,9 +12,6 @@ var ThinBox = {
 };
 (function($){
 	$.ux.behavior("ThinBox", {
-		initialize: function() {
-			/* Probably preload images here */
-		},
 		onclick: function() {
 			this.showModal(this.element);
 			return false;
@@ -22,28 +19,8 @@ var ThinBox = {
 		getContentElement: function() {
 			return $("#" + this.options.thinboxModalContent);
 		},
-		showModal: function(element) {
+		setupModal : function(vars) {
 			var self = this;
-			var href = $(element).attr("href")||$(element).attr("alt");
-			var imageUrl = /\.(jpe?g|png|gif|bmp)/gi;
-			var isImage = false;
-			if (href.substr(0, 1) == "#") {
-				var thinboxContent = $($(element).attr("href")).html();
-				var inIframe = false;
-			} else if(href.match(imageUrl)) {
-				var thinboxImage = new Image();
-				thinboxImage.src = href;
-				var thinboxContent = $("<img>").attr("src",href);
-				var imageDesc = $($(element).attr("title")).html();
-				var inIframe = false;
-				var isImage = true;
-			}
-			else {
-				var thinboxContent = $("<iframe height='100%' width='100%' frameborder='0' style='border:0'></iframe>");
-				thinboxContent.attr("src", href);
-				var inIframe = true;
-			}
-			
 			var thinboxBG = $('<div></div>').attr('id',this.options.thinboxModalBG);
 			var thinboxModalContent = $('<div></div>').attr('id',this.options.thinboxModalContent).addClass(this.options.thinboxModalContent);
 			var thinboxModalContentBG = $('<div></div>').attr('id',this.options.thinboxModalContentBG);
@@ -69,11 +46,11 @@ var ThinBox = {
 				'zIndex': '999999'
 			}).appendTo(thinboxBG);
 			
-			boxHeight = this.options.height;
-			boxWidth = this.options.width;
-			if(isImage) {
+			var boxHeight = this.options.height;
+			var boxWidth = this.options.width;
+			if(vars.isImage) {
 				boxHeight = '';
-				boxWidth = thinboxImage.width;
+				boxWidth = vars.thinboxImage.width;
 			}
 			
 			$(thinboxModalContent).css({
@@ -83,10 +60,15 @@ var ThinBox = {
 				'top': this.options.top,
 				'position': 'relative',
 				'zIndex': '9999999'
-			}).html(thinboxContent).appendTo(thinboxBG);
+			}).html(vars.thinboxContent).appendTo(thinboxBG);
 			
-			if(isImage) {
-				$(imageDesc).appendTo(thinboxModalContent);
+			if(vars.isImage) {
+				$(vars.imageDesc).appendTo(thinboxModalContent);
+			}
+			if(vars.inIframe) {
+				$(thinboxModalContent).css({
+					'overflow': 'hidden'
+				});
 			}
 			
 			if(this.options.clickClose) {
@@ -116,8 +98,54 @@ var ThinBox = {
 					self.resizeHeight();
 				}
 			});
+			
 			$(thinboxBG).show();
 			this.dispatchEvent("Show");
+			
+			/* Keeps modal in view on IE6 */
+			if($.browser.msie && $.browser.version <= 6) {
+				window.location = "#";
+			}
+		},
+		showModal: function(element) {
+			var self = this;
+			var href = $(element).attr("href")||$(element).attr("alt")||'';
+			var imageUrl = /\.(jpe?g|png|gif|bmp)/gi;
+			var isImage = false;
+			if (href.substr(0, 1) == "#") {
+				var thinboxContent = $($(element).attr("href")).html();
+				var inIframe = false;
+			} else if(href.match(imageUrl)) {
+				var thinboxImage = new Image();
+				var thinboxContent = $("<img>").attr("src",href);
+				var imageDesc = $($(element).attr("title")).html();
+				var inIframe = false;
+				var isImage = true;
+			} else if(href=='') {
+				 return false;
+			} else {
+				var thinboxContent = $("<iframe height='100%' width='100%' frameborder='0' style='border:0'></iframe>");
+				thinboxContent.attr("src", href);
+				var inIframe = true;
+			}
+			
+			var vars = {
+				'thinboxContent': thinboxContent,
+				'inIframe': inIframe,
+				'thinboxImage': thinboxImage,
+				'imageDesc': imageDesc,
+				'isImage': isImage
+			}
+			
+			if(isImage) {
+				thinboxImage.onload = function() {
+					self.setupModal(vars);
+				}
+				thinboxImage.src = href;
+			} else {
+				this.setupModal(vars);
+			}
+			
 			return false;
 		},
 		remove: function() {
