@@ -65,6 +65,13 @@ var ThinBox = {
 			if(vars.isImage) {
 				$(vars.imageDesc).appendTo(thinboxModalContent);
 			}
+			
+			if(vars.isImage && this.options.showCloseButton) {
+				var imageCloseButton = '<a class="jsThinboxClose '+this.options.thinboxModalCloseButton+'"><img src="'+this.options.closeButton+'" alt="Close" /></a>';
+				$(imageCloseButton).appendTo(thinboxModalContent);
+			}
+			
+			
 			if(vars.inIframe) {
 				$(thinboxModalContent).css({
 					'overflow': 'hidden'
@@ -118,6 +125,7 @@ var ThinBox = {
 			} else if(href.match(imageUrl)) {
 				var thinboxImage = new Image();
 				var thinboxContent = $("<img>").attr("src",href);
+				console.log($($(element).attr("title")).html());
 				var imageDesc = $($(element).attr("title")).html();
 				var inIframe = false;
 				var isImage = true;
@@ -188,12 +196,15 @@ var ThinBox = {
 		clickClose: true,
 		fullHeight: false,
 		animateResize: true,
+		showCloseButton: true,
 		fullHeightPadding: '30',
 		thinboxModalBG: 'thinboxModalBG',
 		thinboxModalContent: 'thinboxModalContent',
 		thinboxModalContentBG: 'thinboxModalContentBG',
+		thinboxModalCloseButton: 'thinboxModalCloseButton',
 		thinboxModalContentBGColor: '#000',
-		thinboxModalContentBGOpacity: '30',
+		thinboxModalContentBGOpacity: '40',
+		closeButton: '/ui/images/icons/tb-close-button.gif',
 		onShow: function() { }
 	});
 	
