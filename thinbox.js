@@ -51,6 +51,19 @@ var ThinBox = {
 			if(vars.isImage) {
 				boxHeight = '';
 				boxWidth = vars.thinboxImage.width;
+				if(boxWidth>950) {
+					boxWidth = 950;
+					$(vars.thinboxContent).css({
+						'height': 'auto',
+						'width': 950
+					})
+				}
+				if(vars.thinboxImage.height>500) {
+					$(vars.thinboxContent).css({
+						'height': 500,
+						'width': 'auto'
+					});
+				}
 			}
 			
 			$(thinboxModalContent).css({
@@ -125,7 +138,6 @@ var ThinBox = {
 			} else if(href.match(imageUrl)) {
 				var thinboxImage = new Image();
 				var thinboxContent = $("<img>").attr("src",href);
-				console.log($($(element).attr("title")).html());
 				var imageDesc = $($(element).attr("title")).html();
 				var inIframe = false;
 				var isImage = true;
@@ -189,8 +201,8 @@ var ThinBox = {
 			}
 		}
 	}, {
-		width: '600px',
-		height: '350px',
+		width: '417px',
+		height: '250px',
 		margin: '0 auto',
 		top: '10%',
 		clickClose: true,
@@ -210,7 +222,7 @@ var ThinBox = {
 	
 	//init thinbox
 	$(document).ready(function(){
-		ThinBox.modals = $("a[rel*='thinbox'],input.thinbox").attachAndReturn("ThinBox", {
+		ThinBox.modals = $("a[rel*='thinbox'],a.thinbox,input.thinbox").attachAndReturn("ThinBox", {
 			onShow: function() { ThinBox.onShow.call(this); }
 		});
 	});
