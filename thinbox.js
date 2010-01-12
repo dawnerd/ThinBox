@@ -12,6 +12,9 @@ var ThinBox = {
 };
 (function($){
 	$.ux.behavior("ThinBox", {
+        initialize: function() {
+            ThinBox.modals.push(this);
+        },
 		onclick: function() {
 			this.showModal(this.element);
 			return false;
@@ -222,7 +225,7 @@ var ThinBox = {
 	
 	//init thinbox
 	$(document).ready(function(){
-		ThinBox.modals = $("a[rel*='thinbox'],a.thinbox,input.thinbox").attachAndReturn("ThinBox", {
+		$("a[rel*='thinbox'],a.thinbox,input.thinbox").attachAndReturn("ThinBox", {
 			onShow: function() { ThinBox.onShow.call(this); }
 		});
 	});
