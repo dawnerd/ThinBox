@@ -14,7 +14,6 @@ ThinBox was built as a lightweight alternative to the now deprecated Thickbox.
 ## Dependencies 
 
 * jQuery 1.3
-* [Low Pro JQ](http://github.com/jgallen23/low-pro-for-jquery)
 
 ## Usage
 
