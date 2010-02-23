@@ -135,7 +135,7 @@ var ThinBox = {
 				self.resizeHeight();
 			}
 			
-			$('.jsThinboxClose',element).bind('click',function() {
+			$('.jsThinboxClose',thinboxModalContent).bind('click',function() {
 				self.remove();
 				return false;
 			});
