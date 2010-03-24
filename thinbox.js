@@ -8,37 +8,43 @@ var ThinBox = {
 		$(this.modals[0]).data('thinbox').resize(width,height);
 		return false;
 	},
-	onShow: function(self) {},
-	open: function(url) {
-		$(this.modals[0]).data('thinbox').showModal('',url);
-	}
+	onShow: function(self) {}
 };
 (function($){
+	var defaultSettings = {
+		width: '417px',
+		height: '250px',
+		margin: '0 auto',
+		top: '10%',
+		clickClose: true,
+		fullHeight: false,
+		animateResize: true,
+		showCloseButton: true,
+		fullHeightPadding: '30',
+		thinboxModalBG: 'thinboxModalBG',
+		thinboxModalContent: 'thinboxModalContent',
+		thinboxModalContentBG: 'thinboxModalContentBG',
+		thinboxModalCloseButton: 'thinboxModalCloseButton',
+		thinboxModalContentBGColor: '#000',
+		thinboxModalContentBGOpacity: '40',
+		closeButton: '/ui/images/icons/tb-close-button.gif',
+		onShow: function() { }
+	};
+	
 	var Thinbox = function(element,options) {
-		element = $(element);
+		if(element==null) {
+			var singleMode = true;
+		} else {
+			var singleMode = false;
+			element = $(element);
+		}
 		var self = this;
-		this.settings = $.extend({
-			width: '417px',
-			height: '250px',
-			margin: '0 auto',
-			top: '10%',
-			clickClose: true,
-			fullHeight: false,
-			animateResize: true,
-			showCloseButton: true,
-			fullHeightPadding: '30',
-			thinboxModalBG: 'thinboxModalBG',
-			thinboxModalContent: 'thinboxModalContent',
-			thinboxModalContentBG: 'thinboxModalContentBG',
-			thinboxModalCloseButton: 'thinboxModalCloseButton',
-			thinboxModalContentBGColor: '#000',
-			thinboxModalContentBGOpacity: '40',
-			closeButton: '/ui/images/icons/tb-close-button.gif',
-			onShow: function() { }
-		},options||{});
+		this.settings = $.extend(defaultSettings,options||{});
 		
 		this.init = function() {
-			self.bindClick();
+			if(!singleMode) {
+				self.bindClick();
+			}
 		};
 		
 		this.bindClick = function() {
@@ -161,7 +167,7 @@ var ThinBox = {
 			var imageUrl = /\.(jpe?g|png|gif|bmp)/gi;
 			var isImage = false;
 			if(href.substr(0,1)=="#") {
-				var thinboxContent = $($(element).attr("href")).html();
+				var thinboxContent = $(href).html();
 				var inIframe = false;
 			} else if(href.match(imageUrl)) {
 				var thinboxImage = new Image();
@@ -236,6 +242,7 @@ var ThinBox = {
 		this.init();
 	};
 	$.fn.thinbox = function(options) {
+		ThinBox.options = options;
 		return this.each(function(){
 			var element = $(this);
 			if(element.data('thinbox')) return;
@@ -249,4 +256,10 @@ var ThinBox = {
 			onShow: function() { ThinBox.onShow(self); }
 		});
 	});
+	
+	ThinBox.open = function(url,options) {
+		settings = $.extend(defaultSettings,options||{});
+		thinbox = new Thinbox(null,settings);
+		thinbox.showModal('',url);
+	}
 })(jQuery);
