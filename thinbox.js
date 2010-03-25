@@ -260,6 +260,7 @@ var ThinBox = {
 	ThinBox.open = function(url,options) {
 		settings = $.extend(defaultSettings,options||{});
 		thinbox = new Thinbox(null,settings);
+		ThinBox.modals.push($(document).data('thinbox',thinbox));
 		thinbox.showModal('',url);
 	}
 })(jQuery);
