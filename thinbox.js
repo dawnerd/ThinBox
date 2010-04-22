@@ -113,7 +113,7 @@ var ThinBox = {
 				'zIndex': '9999999'
 			}).html(vars.thinboxContent).appendTo(thinboxBG);
 			
-			if(vars.isImage) $(vars.imageDesc).appendTo(thinboxModalContent);
+			if(vars.isImage && vars.imageDesc) $(vars.imageDesc).appendTo(thinboxModalContent);
 			
 			if(vars.isImage && self.settings.showCloseButton) {
 				var imageCloseButton = '<a class="jsThinboxClose '+self.settings.thinboxModalCloseButton+'"><img src="'+self.settings.closeButton+'" alt="Close" /></a>';
@@ -172,7 +172,7 @@ var ThinBox = {
 			} else if(href.match(imageUrl)) {
 				var thinboxImage = new Image();
 				var thinboxContent = $("<img>").attr("src",href);
-				var imageDesc = $($(element).attr("title")).html();
+				var imageDesc = $('<p/>').html($($('img',element).attr('title')).html()||"&nbsp;");
 				var inIframe = false;
 				var isImage = true;
 			} else if(href=='') {
